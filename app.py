@@ -11,9 +11,6 @@ pg.display.set_caption('Digit Classifier')
 model = tf.keras.models.load_model('digit_classifier.h5')
 pixels = np.zeros((28,28))
 
-mnist = tf.keras.datasets.mnist
-(x_train, y_train), (x_test, y_test) = mnist.load_data()
-
 while True:
     for event in pg.event.get():
         if event.type == pg.QUIT:
@@ -24,8 +21,7 @@ while True:
     if keys[pg.K_c]:
         pixels = np.zeros((28,28))
     if keys[pg.K_p]:
-        x_test[0] = pixels.T
-        prediction = model.predict(x_test[:1])
+        prediction = model.predict(np.array([pixels.T]))
         num = np.argmax(prediction[0])
         pg.display.set_caption(f'Predicted = {num}')
     buttons = pg.mouse.get_pressed()
